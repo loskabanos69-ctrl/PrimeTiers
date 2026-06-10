@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PrimeTiers — Tierlist Leaderboard</title>
+    <meta name="description" content="PrimeTiers Minecraft PvP Tierlist — View player rankings across all combat modes.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏆</text></svg>">
+</head>
+<body>
+    <!-- Background effects -->
+    <div class="bg-grid"></div>
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
+
+    <!-- Header -->
+    <header id="site-header">
+        <div class="header-inner">
+            <div class="logo">
+                <div class="logo-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                    </svg>
+                </div>
+                <span class="logo-text">PRIME<span class="logo-highlight">TIERS</span></span>
+            </div>
+            <nav class="header-nav">
+                <button class="nav-btn active" data-view="global" id="nav-global">Global</button>
+                <button class="nav-btn" data-view="modes" id="nav-modes">By Mode</button>
+            </nav>
+            <button class="info-btn" id="info-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>
+                </svg>
+                Information
+            </button>
+            <a href="https://discord.gg/g8hzGykpzc" target="_blank" rel="noopener noreferrer" class="discord-btn" title="Join our Discord">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/>
+                </svg>
+            </a>
+            <div class="header-search">
+                <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                </svg>
+                <input type="text" id="search-input" placeholder="Search players..." autocomplete="off">
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content">
+        <!-- Mode filter bar (visible in mode view) -->
+        <div class="mode-bar" id="mode-bar">
+            <button class="mode-chip active" data-mode="all" id="mode-all" data-tooltip="Overall">
+                <img class="chip-icon-img" src="https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.21/assets/minecraft/textures/item/diamond_trophy.png" alt="Overall" onerror="this.src='https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.21/assets/minecraft/textures/item/totem_of_undying.png'">
+            </button>
+            <button class="mode-chip" data-mode="sword" id="mode-sword" data-tooltip="Sword">
+                <img class="chip-icon-img" src="https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@1.21/assets/minecraft/textures/item/diamond_sword.png" alt="Sword">
+            </button>
+            <button class="mode-chip" data-mode="axe" id="mode-axe" data-tooltip="Axe">
+                <img class="chip-icon-img" src="https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@1.21/assets/minecraft/textures/item/diamond_axe.png" alt="Axe">
+            </button>
+            <button class="mode-chip" data-mode="npot" id="mode-npot" data-tooltip="nPot">
+                <img class="chip-icon-img" src="https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@1.21/assets/minecraft/textures/item/netherite_helmet.png" alt="nPot">
+            </button>
+            <button class="mode-chip" data-mode="dpot" id="mode-dpot" data-tooltip="dPot">
+                <img class="chip-icon-img" src="https://minecraft.wiki/images/Splash_Potion_of_Healing_JE2_BE2.png" alt="dPot">
+            </button>
+            <button class="mode-chip" data-mode="mace" id="mode-mace" data-tooltip="Mace">
+                <img class="chip-icon-img" src="https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@1.21/assets/minecraft/textures/item/mace.png" alt="Mace">
+            </button>
+            <button class="mode-chip" data-mode="smp" id="mode-smp" data-tooltip="SMP">
+                <img class="chip-icon-img" src="https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@1.21/assets/minecraft/textures/item/ender_pearl.png" alt="SMP">
+            </button>
+            <button class="mode-chip" data-mode="uhc" id="mode-uhc" data-tooltip="UHC">
+                <img class="chip-icon-img" src="https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@1.21/assets/minecraft/textures/item/golden_apple.png" alt="UHC">
+            </button>
+            <button class="mode-chip" data-mode="vanilla" id="mode-vanilla" data-tooltip="Vanilla">
+                <img class="chip-icon-img" src="https://cdn.jsdelivr.net/gh/InventivetalentDev/minecraft-assets@1.21/assets/minecraft/textures/item/end_crystal.png" alt="Vanilla">
+            </button>
+        </div>
+
+        <!-- Stats bar -->
+        <div class="stats-bar" id="stats-bar">
+            <div class="stat-item">
+                <span class="stat-value" id="stat-players">—</span>
+                <span class="stat-label">Players</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+                <span class="stat-value" id="stat-tests">—</span>
+                <span class="stat-label">Tiers Assigned</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+                <span class="stat-value" id="stat-updated">—</span>
+                <span class="stat-label">Last Updated</span>
+            </div>
+        </div>
+
+        <!-- Loading spinner -->
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Loading tierlist data...</p>
+        </div>
+
+        <!-- Error state -->
+        <div class="error-state" id="error-state" style="display:none;">
+            <div class="error-icon">⚠️</div>
+            <h3>Could not load tierlist</h3>
+            <p>The bot API is unreachable. Make sure the bot is running.</p>
+            <button class="retry-btn" onclick="loadLeaderboard()">Try Again</button>
+        </div>
+
+        <!-- Table -->
+        <div class="table-wrapper" id="table-wrapper" style="display:none;">
+            <div class="table-header">
+                <span class="th-rank">#</span>
+                <span class="th-player">PLAYER</span>
+                <span class="th-tiers">TIERS</span>
+                <span class="th-points">POINTS</span>
+            </div>
+            <div class="table-body" id="table-body">
+                <!-- Rows injected by JS -->
+            </div>
+        </div>
+
+        <!-- No results -->
+        <div class="no-results" id="no-results" style="display:none;">
+            <p>No players found matching your search.</p>
+        </div>
+    </main>
+
+    <!-- Board Wrapper for Mode Specific View -->
+    <main class="board-wrapper" id="board-wrapper" style="display: none;">
+        <!-- Filled by JS -->
+    </main>
+
+    <!-- Footer -->
+    <footer id="site-footer">
+        <div class="footer-inner">
+            <span>PrimeTiers &copy; 2026</span>
+            <span class="footer-dot">·</span>
+            <span>Powered by Discord Bot</span>
+        </div>
+    </footer>
+
+    <!-- Player Profile Modal -->
+    <div class="profile-overlay" id="profile-overlay">
+        <div class="profile-modal" id="profile-modal">
+            <button class="profile-close" id="profile-close" aria-label="Close profile">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+            </button>
+
+            <!-- Top section: name + points -->
+            <div class="profile-header" id="profile-header">
+                <div class="profile-name-section">
+                    <h2 class="profile-username" id="profile-username">—</h2>
+                    <div class="profile-badges">
+                        <span class="profile-title-badge" id="profile-title-badge">—</span>
+                        <span class="profile-points-badge" id="profile-points-badge">
+                            <span class="profile-pts-num" id="profile-pts-num">0</span> Points
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Skin render -->
+            <div class="profile-skin-section">
+                <img class="profile-skin" id="profile-skin" alt="Player skin" src="">
+                <a class="profile-namemc-btn" id="profile-namemc-link" href="#" target="_blank" rel="noopener noreferrer">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                        <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+                    </svg>
+                    NameMC
+                </a>
+            </div>
+
+            <!-- Tiers Grid -->
+            <div class="profile-tiers-section">
+                <h3 class="profile-section-title">Current Tiers</h3>
+                <div class="profile-tiers-grid" id="profile-tiers-grid">
+                    <!-- Filled by JS -->
+                </div>
+            </div>
+
+            <!-- Highest Tiers Grid -->
+            <div class="profile-tiers-section">
+                <h3 class="profile-section-title">Retired / Highest</h3>
+                <div class="profile-tiers-grid" id="profile-highest-grid">
+                    <!-- Filled by JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Information Modal -->
+    <div class="profile-overlay" id="info-overlay">
+        <div class="profile-modal info-modal" id="info-modal">
+            <button class="profile-close" id="info-close" aria-label="Close information">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+            </button>
+
+            <div class="info-tabs">
+                <button class="info-tab-btn active" data-tab="titles">Titles</button>
+                <button class="info-tab-btn" data-tab="points">Points</button>
+            </div>
+
+            <div class="info-content active" id="info-tab-titles">
+                <h3 class="info-content-title">How to obtain <u>Achievement Titles</u></h3>
+                
+                <div class="info-item">
+                    <div class="info-title title-grandmaster">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        Combat Grandmaster
+                    </div>
+                    <div class="info-desc">Obtained 400+ total points.</div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-title title-master">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        Combat Master
+                    </div>
+                    <div class="info-desc">Obtained 250+ total points.</div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-title title-ace">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                        Combat Ace
+                    </div>
+                    <div class="info-desc">Obtained 100+ total points.</div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-title title-specialist">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                        Combat Specialist
+                    </div>
+                    <div class="info-desc">Obtained 50+ total points.</div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-title title-cadet">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/></svg>
+                        Combat Cadet
+                    </div>
+                    <div class="info-desc">Obtained 20+ total points.</div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-title title-novice">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="2"/></svg>
+                        Combat Novice
+                    </div>
+                    <div class="info-desc">Obtained 10+ total points.</div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-title title-rookie">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/></svg>
+                        Rookie
+                    </div>
+                    <div class="info-desc">Starting rank for players with less than 10 points.</div>
+                </div>
+            </div>
+
+            <div class="info-content" id="info-tab-points">
+                <h3 class="info-content-title">How <u>ranking points</u> are calculated</h3>
+                
+                <div class="info-tier-group">
+                    <div class="info-tier-title tier-1">🏆 Tier 1</div>
+                    <div class="info-tier-pts">
+                        <span class="info-pt-badge badge-ht">⏫ 60 Points</span>
+                        <span class="info-pt-badge badge-lt">🔼 45 Points</span>
+                    </div>
+                </div>
+
+                <div class="info-tier-group">
+                    <div class="info-tier-title tier-2">🥈 Tier 2</div>
+                    <div class="info-tier-pts">
+                        <span class="info-pt-badge badge-ht">⏫ 30 Points</span>
+                        <span class="info-pt-badge badge-lt">🔼 20 Points</span>
+                    </div>
+                </div>
+
+                <div class="info-tier-group">
+                    <div class="info-tier-title tier-3">🥉 Tier 3</div>
+                    <div class="info-tier-pts">
+                        <span class="info-pt-badge badge-ht">⏫ 10 Points</span>
+                        <span class="info-pt-badge badge-lt">🔼 6 Points</span>
+                    </div>
+                </div>
+
+                <div class="info-tier-group">
+                    <div class="info-tier-title tier-4">Tier 4</div>
+                    <div class="info-tier-pts">
+                        <span class="info-pt-badge badge-ht">⏫ 4 Points</span>
+                        <span class="info-pt-badge badge-lt">🔼 3 Points</span>
+                    </div>
+                </div>
+
+                <div class="info-tier-group">
+                    <div class="info-tier-title tier-5">Tier 5</div>
+                    <div class="info-tier-pts">
+                        <span class="info-pt-badge badge-ht">⏫ 2 Points</span>
+                        <span class="info-pt-badge badge-lt">🔼 1 Point</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
