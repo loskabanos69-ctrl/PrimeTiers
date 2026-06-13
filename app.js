@@ -4,8 +4,8 @@
    ═══════════════════════════════════════════════════════════ */
 
 // ── Configuration ───────────────────────────────────────────
-// Change this to your bot's API URL (e.g. your VPS IP or localhost)
-const API_BASE = 'http://localhost:3000';
+// Change this to fetch from the local static JSON file
+const API_BASE = './data.json';
 
 // ── Constants ───────────────────────────────────────────────
 const TIER_POINTS = {
@@ -92,7 +92,7 @@ async function loadLeaderboard() {
     $noResults.style.display = 'none';
 
     try {
-        const res = await fetch(`${API_BASE}/api/leaderboard`);
+        const res = await fetch(API_BASE);
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
 
