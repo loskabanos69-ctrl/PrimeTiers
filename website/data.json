@@ -1,0 +1,48 @@
+{
+  "updated": "2026-06-13T23:23:32.061Z",
+  "players": [
+    {
+      "uuid": "ae701f3295cf4ca782df6e77ff32ceeb",
+      "username": "hiwf",
+      "discordId": "1136298506831806595",
+      "tiers": {
+        "mace": {
+          "current": "LT3",
+          "previous": "HT1",
+          "highest": "HT1"
+        },
+        "sword": {
+          "current": "HT1",
+          "previous": "HT4",
+          "highest": "HT1"
+        },
+        "dpot": {
+          "current": "HT4",
+          "previous": null,
+          "highest": "HT4"
+        }
+      },
+      "totalPoints": 70
+    },
+    {
+      "uuid": "e17f75b96a94484890e65a9eedadf724",
+      "username": "LosKabanos",
+      "discordId": "1399410917833310238",
+      "tiers": {
+        "mace": {
+          "current": "HT1",
+          "previous": "HT1",
+          "highest": "HT1"
+        }
+      },
+      "totalPoints": 60
+    },
+    {
+      "uuid": "41ccdd2fec834f33a7c9128f1834754e",
+      "username": "Herm_s_",
+      "discordId": "1084142815359025174",
+      "tiers": {},
+      "totalPoints": 0
+    }
+  ]
+}
